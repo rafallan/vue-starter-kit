@@ -1,16 +1,12 @@
 <?php
 
+use App\Http\Controllers\Painel\TarefaController;
 use App\Http\Controllers\Painel\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-
-Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::resource('users', UserController::class);
+Route::resource('tarefas', TarefaController::class);
 
 Route::inertia('/', 'Welcome', [
     'canRegister' => Features::enabled(Features::registration()),

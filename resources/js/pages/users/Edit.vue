@@ -27,8 +27,8 @@ defineOptions({
 });
 
 const form = useForm({
-    name: props.user.name,
-    email: props.user.email,
+    name: props.user?.name,
+    email: props.user?.email,
     password: '',
     password_confirmation: ''
 });
@@ -43,6 +43,18 @@ const submit = () => {
 <template>
 
     <Head title="Editar Usuário" />
+
+    <div v-if="$page.props.flash.success">
+        <div class="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700" role="alert">
+            {{ $page.props.flash.success }}
+        </div>
+    </div>
+
+    <div v-if="$page.props.flash.error">
+        <div class="mb-4 rounded-lg bg-red-100 p-4 text-sm text-red-700" role="alert">
+            {{ $page.props.flash.error }}
+        </div>
+    </div>
 
     <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
         <div class="max-w-6xl">

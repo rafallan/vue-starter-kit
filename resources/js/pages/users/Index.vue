@@ -46,6 +46,14 @@ const deleteUser = (user: any) => {
 
     <Head title="Listagem dos usuários" />
 
+    {{ $page.props.flash }}
+
+    <div v-if="$page.props.flash.success">
+        <div class="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700" role="alert">
+            {{ $page.props.flash.success }}
+        </div>
+    </div>
+
     <div class="flex justify-end">
         <Link :href="userRoutes.create.url()" class="border m-2 p-2 rounded-lg bg-blue-300 dark:text-white">Cadastrar
             Novo</Link>

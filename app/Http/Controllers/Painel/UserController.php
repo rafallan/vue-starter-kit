@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -35,7 +36,9 @@ class UserController extends Controller
 
         $cadastrado = User::create($data);
 
-        return redirect()->route('users.index');
+        if ($cadastrado) {
+            return redirect()->route('users.index')->with('success', 'Usuário cadastrado com sucesso.');
+        }
     }
 
     public function edit(User $user)
@@ -47,15 +50,23 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        $data = $request->validated();
 
-        if (empty($data['password'])) {
-            unset($data['password']);
+        $data = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->input('password'));
         }
 
-        $user->update($data);
+        $atualizado = $user->update($data);
 
-        return redirect()->route('users.index');
+        if ($atualizado) {
+            return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
+        } else {
+            return redirect()->back()->with('error', 'Erro ao atualizar o usuário.');
+        }
     }
 
     public function destroy(User $user)
