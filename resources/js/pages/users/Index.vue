@@ -1,8 +1,27 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
+import { useDebounceFn } from '@vueuse/core';
+import { Edit2, Trash, Search } from 'lucide-vue-next';
+import { ref, watch } from 'vue';
 import { dashboard } from '@/routes';
 import userRoutes from '@/routes/users';
-import { Edit2, Trash } from 'lucide-vue-next';
+import { Input } from '@/components/ui/input';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
+
+const props = defineProps({
+    users: Array as any,
+    filters: Object as any,
+});
+
+const search = ref(props.filters?.search || '');
 
 defineOptions({
     layout: {
@@ -19,26 +38,26 @@ defineOptions({
     },
 });
 
-
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
-
-defineProps({
-    users: Array as any,
-});
-
 const deleteUser = (user: any) => {
     if (confirm(`Tem certeza que deseja remover o usuário ${user.name}?`)) {
         router.delete(userRoutes.destroy.url(user));
     }
 };
+
+const handleSearch = useDebounceFn((value: string) => {
+    router.get(
+        userRoutes.index.url(),
+        { search: value },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
+}, 300);
+
+watch(search, (newValue) => {
+    handleSearch(newValue);
+});
 
 </script>
 
@@ -46,15 +65,20 @@ const deleteUser = (user: any) => {
 
     <Head title="Listagem dos usuários" />
 
-    {{ $page.props.flash }}
-
     <div v-if="$page.props.flash.success">
         <div class="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700" role="alert">
             {{ $page.props.flash.success }}
         </div>
     </div>
 
-    <div class="flex justify-end">
+    <div class="flex justify-between items-center mb-6">
+        <div class="relative w-full max-w-sm items-center">
+            <Input v-model="search" type="text" placeholder="Pesquisar usuários..." class="pl-10" />
+            <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                <Search class="size-4 text-muted-foreground" />
+            </span>
+        </div>
+
         <Link :href="userRoutes.create.url()" class="border m-2 p-2 rounded-lg bg-blue-300 dark:text-white">Cadastrar
             Novo</Link>
     </div>

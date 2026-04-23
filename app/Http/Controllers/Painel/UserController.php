@@ -12,12 +12,18 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $search = $request->input('search');
+
+        $users = User::when($search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        })->get();
 
         return Inertia::render('users/Index', [
-            'users' => $users
+            'users' => $users,
+            'filters' => $request->only(['search'])
         ]);
     }
 

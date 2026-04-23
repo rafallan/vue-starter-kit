@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, useForm } from '@inertiajs/vue3';
-import userRoutes from '@/routes/users';
 import { dashboard } from '@/routes';
+import userRoutes from '@/routes/users';
 
 defineOptions({
     layout: {

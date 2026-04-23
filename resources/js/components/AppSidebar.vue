@@ -15,8 +15,8 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
 import users from '@/routes/users';
+import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {

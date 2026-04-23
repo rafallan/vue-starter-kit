@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import InputError from '@/components/InputError.vue';
 
 const props = defineProps<{
     statuses: any[];
@@ -44,6 +44,7 @@ const toggleUser = (userId: any) => {
         // Adiciona o ID ao array se ele não estiver presente
         form.user_ids = [...form.user_ids, id];
     }
+
     console.log('User IDs atuais:', form.user_ids);
 };
 </script>
