@@ -25,3 +25,37 @@ In order to ensure that the Laravel community is welcoming to all, please review
 ## License
 
 The Laravel + Vue starter kit is open-sourced software licensed under the MIT license.
+
+## Siga os passos para iniciar o projeto
+
+## Instalar as dependências do laravel
+
+composer install ou composer update
+
+## Instalar as dependências do node para utilizar o vue js
+
+npm install
+
+## Copiar e editar o arquivo (.env) das variáveis de ambiente do projeto
+
+cp .env.example .env
+
+## Criar a chave da aplicação
+
+php artisan key:generate
+
+## Rodar as migrações
+
+php artisan migrate
+
+## Rodar os seeders
+
+php artisan db:seed
+
+## Rodar o servidor de aplicação do php
+
+php artisan serve
+
+## Rodar o node
+
+npm run dev
