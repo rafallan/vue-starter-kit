@@ -35,8 +35,13 @@ class TarefaController extends Controller
 
     public function store(StoreTarefaRequest $request)
     {
-        $validated = $request->validated();
-        $tarefa = Tarefa::create($validated);
+
+        $data = [
+            'titulo' => $request->titulo,
+            'descricao' => $request->descricao,
+            'status_id' => $request->status_id
+        ];
+        $tarefa = Tarefa::create($data);
 
         if ($request->has('user_ids')) {
             $tarefa->users()->sync($request->user_ids);
@@ -60,8 +65,13 @@ class TarefaController extends Controller
 
     public function update(UpdateTarefaRequest $request, Tarefa $tarefa)
     {
-        $validated = $request->validated();
-        $tarefa->update($validated);
+        $data = [
+            'titulo' => $request->titulo,
+            'descricao' => $request->descricao,
+            'status_id' => $request->status_id
+        ];
+
+        $tarefa->update($data);
 
         if ($request->has('user_ids')) {
             $tarefa->users()->sync($request->user_ids);
