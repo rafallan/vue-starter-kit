@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { Head, useForm } from '@inertiajs/vue3';
 import { dashboard } from '@/routes';
 import userRoutes from '@/routes/users';

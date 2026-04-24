@@ -5,8 +5,8 @@ use App\Http\Controllers\Painel\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::resource('users', UserController::class);
-Route::resource('tarefas', TarefaController::class);
+Route::resource('/users', UserController::class)->middleware('auth');
+Route::resource('/tarefas', TarefaController::class)->middleware('auth');
 
 Route::inertia('/', 'Welcome', [
     'canRegister' => Features::enabled(Features::registration()),

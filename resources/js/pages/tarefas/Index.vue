@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Edit2, Trash } from 'lucide-vue-next';
 import {
@@ -12,11 +12,11 @@ import {
 } from '@/components/ui/table';
 import tarefaRoutes from '@/routes/tarefas';
 
-defineProps<{
-    tarefas: any[]
-}>();
+const props = defineProps({
+    tarefas: Array,
+});
 
-const deleteTarefa = (tarefa: any) => {
+const deleteTarefa = (tarefa) => {
     if (confirm(`Tem certeza que deseja remover a tarefa "${tarefa.titulo}"?`)) {
         router.delete(tarefaRoutes.destroy.url(tarefa));
     }

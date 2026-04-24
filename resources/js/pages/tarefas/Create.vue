@@ -1,14 +1,14 @@
-<script setup lang="ts">
+<script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const props = defineProps<{
-    statuses: any[];
-    users: any[];
-}>();
+const props = defineProps({
+    statuses: Array,
+    users: Array,
+});
 
 /**
  * Objeto de formulário reativo do Inertia.
@@ -19,7 +19,7 @@ const form = useForm({
     descricao: '',
     status_id: '',
     // Inicializa como um array vazio para uma nova tarefa
-    user_ids: [] as number[],
+    user_ids: [],
 });
 
 const submit = () => {
@@ -33,7 +33,7 @@ const submit = () => {
  * Alterna a seleção de um usuário para a tarefa.
  * Se o usuário já estiver selecionado, ele é removido; caso contrário, é adicionado.
  */
-const toggleUser = (userId: any) => {
+const toggleUser = (userId) => {
     const id = Number(userId);
     const index = form.user_ids.indexOf(id);
 
